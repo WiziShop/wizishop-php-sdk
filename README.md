@@ -4,9 +4,13 @@ A PHP SDK (Software Development Kit) for the WiziShop RESTful API [https://api.w
 
 ## Installation
 
+Get [composer](https://getcomposer.org/)
+
     composer require wizishop/wizishop-php-sdk
 
 ## Usage
+
+Create a new user on [Wizishop Admin](https://admin.wizishop.com/)
 
 ```php
 <?php
@@ -32,7 +36,7 @@ try {
 
 ## Tests
 
-./bin/phpunit
+    ./bin/phpunit
 
 ## Issue Reporting
 

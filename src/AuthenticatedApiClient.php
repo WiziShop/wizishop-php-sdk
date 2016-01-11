@@ -67,6 +67,12 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         return $results;
     }
 
+    /**
+     * @param string $route Route
+     * @param array $params
+     *
+     * @return array Results
+     */
     private function getAllResultsForRoute($route, array $params = [])
     {
         try {
@@ -94,6 +100,12 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         }
     }
 
+    /**
+     * @param string $route
+     * @param array $params
+     *
+     * @return array Result
+     */
     private function getSingleResultForRoute($route, array $params = [])
     {
         try {
@@ -113,26 +125,53 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         return $this->jwt;
     }
 
+    /**
+     * @param int $brandId
+     * @param array $params
+     *
+     * @return array Brand
+     */
     public function getBrand($brandId, array $params = [])
     {
         return $this->getSingleResultForRoute(sprintf('brands/%s', $brandId), $params);
     }
 
+    /**
+     * @param array $params
+     *
+     * @return array Brands
+     */
     public function getBrands(array $params = [])
     {
         return $this->getAllResultsForRoute('brands', $params);
     }
 
+    /**
+     * @param string $sku
+     * @param array $params
+     *
+     * @return array Sku
+     */
     public function getSku($sku, array $params = [])
     {
         return $this->getSingleResultForRoute(sprintf('skus/%s', $sku), $params);
     }
 
+    /**
+     * @param array $params
+     *
+     * @return array Skus
+     */
     public function getSkus(array $params = [])
     {
         return $this->getAllResultsForRoute('skus', $params);
     }
 
+    /**
+     * @param array $params
+     *
+     * @return array Skus
+     */
     public function getDetailedSkus(array $params = [])
     {
         return $this->getAllResultsForRoute('skus', ['detailed' => 1] + $params);
@@ -143,7 +182,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
      * @param int $stock Stock value
      * @param string $method How to update the stock value, can be either "replace" (default), "increase" or "decrease"
      *
-     * @return array
+     * @return array Sku
      */
     public function updateSkuStock($sku, $stock, $method = 'replace')
     {
@@ -165,6 +204,14 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         }
     }
 
+    /**
+     * @param string $brandId
+     * @param string $newName
+     * @param string $newUrl
+     * @param string $newImageUrl
+     *
+     * @return array Brand
+     */
     public function updateBrand($brandId, $newName, $newUrl = null, $newImageUrl = null)
     {
         try {
@@ -190,6 +237,12 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         }
     }
 
+    /**
+     * @param string $name
+     * @param string $newImageUrl
+     *
+     * @return array Brand
+     */
     public function createBrand($name, $newImageUrl = null)
     {
         try {
@@ -211,6 +264,11 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         }
     }
 
+    /**
+     * @param int $brandId
+     *
+     * @return bool
+     */
     public function deleteBrand($brandId)
     {
         try {
@@ -228,7 +286,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
      *                      start_date: Start date
      *                      end_date: End date
      *
-     * @return array
+     * @return array Orders
      */
     public function getOrders(array $params = [])
     {
