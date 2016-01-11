@@ -11,7 +11,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     /**
      * @const string SDK version
      */
-    const VERSION = '1.0.0';
+    const VERSION = '1.0.1';
 
     /**
      * @const string API URL (ending with /)
@@ -142,11 +142,10 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
      * @param string $sku SKU
      * @param int $stock Stock value
      * @param string $method How to update the stock value, can be either "replace" (default), "increase" or "decrease"
-     * @param array $params
      *
      * @return array
      */
-    public function updateSkuStock($sku, $stock, $method = 'replace', array $params = [])
+    public function updateSkuStock($sku, $stock, $method = 'replace')
     {
         if (!in_array($method, ['replace', 'increase', 'decrease'])) {
             throw new \InvalidArgumentException('Update stock method cannot be ' . $method);
@@ -158,7 +157,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
                     'method' => $method,
                     'stock' => $stock
                 ]
-            ] + $params);
+            ]);
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
@@ -166,7 +165,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         }
     }
 
-    public function updateBrand($brandId, $newName, $newUrl = null, $newImageUrl = null, array $params = [])
+    public function updateBrand($brandId, $newName, $newUrl = null, $newImageUrl = null)
     {
         try {
             $fields = [
@@ -183,7 +182,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
 
             $response = $this->patch(sprintf('brands/%s', $brandId), [
                 'json' => $fields
-            ] + $params);
+            ]);
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
@@ -191,7 +190,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         }
     }
 
-    public function createBrand($name, $newImageUrl = null, array $params = [])
+    public function createBrand($name, $newImageUrl = null)
     {
         try {
             $fields = [
@@ -204,7 +203,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
 
             $response = $this->post('brands', [
                 'json' => $fields
-            ] + $params);
+            ]);
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
@@ -212,10 +211,10 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         }
     }
 
-    public function deleteBrand($brandId, array $params = [])
+    public function deleteBrand($brandId)
     {
         try {
-            $response = $this->delete(sprintf('brands/%s', $brandId), $params);
+            $response = $this->delete(sprintf('brands/%s', $brandId));
 
             return 204 == $response->getStatusCode();
         } catch (RequestException $e) {
@@ -233,15 +232,15 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
      */
     public function getOrders(array $params = [])
     {
-        if (isset($params['status_code']) && $params['status_code'] < 0 || $params['status_code'] > 50) {
+        if (array_key_exists('status_code', $params) && ($params['status_code'] < 0 || $params['status_code'] > 50)) {
             throw new \InvalidArgumentException('Order status code should be between 0 and 50');
         }
 
-        if (isset($params['start_date']) && $params['start_date'] instanceof \DateTime) {
+        if (array_key_exists('start_date', $params) && $params['start_date'] instanceof \DateTime) {
             $params['start_date'] = $params['start_date']->format('Y-m-d H:i:s');
         }
 
-        if (isset($params['end_date']) && $params['end_date'] instanceof \DateTime) {
+        if (array_key_exists('end_date', $params) && $params['end_date'] instanceof \DateTime) {
             $params['end_date'] = $params['end_date']->format('Y-m-d H:i:s');
         }
 
@@ -274,14 +273,13 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
      * Changes order status to "preparing" (status_code: 25)
      *
      * @param $orderId Order id
-     * @param array $params
      *
      * @return array Order details with the new status
      */
-    public function preparingOrder($orderId, array $params = [])
+    public function preparingOrder($orderId)
     {
         try {
-            $response = $this->post(sprintf('orders/%s/preparing', $orderId), $params);
+            $response = $this->post(sprintf('orders/%s/preparing', $orderId));
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
@@ -303,16 +301,14 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
      *                                   ]
      *                               ]
      *
-     * @param array $params
-     *
      * @return array Order details with the new status
      */
-    public function shipOrder($orderId, array $trackingNumbers, array $params = [])
+    public function shipOrder($orderId, array $trackingNumbers)
     {
         try {
             $response = $this->post(sprintf('orders/%s/ship', $orderId), [
                 'json' => $trackingNumbers
-            ] + $params);
+            ]);
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
