@@ -1,0 +1,7 @@
+bin
+composer.phar
+vendor
+phpunit.xml
+examples/test.php
+.idea
+.DS_Store

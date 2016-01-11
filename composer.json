@@ -1,0 +1,34 @@
+{
+    "name": "wizishop/wizishop-php-sdk",
+    "description": "WiziShop API SDK",
+    "keywords": ["wizishop", "wizishop.com", "api", "sdk", "e-commerce"],
+    "homepage": "https://api.wizishop.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lucas Courot",
+            "email": "lucas@wizishop.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "WiziShop\\SDK\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "WiziShop\\SDK\\Tests\\": "tests/" }
+    },
+    "require": {
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "^6.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.1"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}
