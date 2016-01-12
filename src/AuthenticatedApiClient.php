@@ -29,7 +29,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         $shopId = $jwt->get('id_shop');
         $apiUrl = isset($config['base_uri']) ? $config['base_uri'] : self::API_URL;
         $baseUri = $apiUrl . 'v2/' . ($shopId ? sprintf('shops/%s/', $shopId) : '');
-
+//var_dump($baseUri);die;
         $defaultConfig = [
             'base_uri' => $baseUri,
             'headers' => [
@@ -154,7 +154,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
      */
     public function getSku($sku, array $params = [])
     {
-        return $this->getSingleResultForRoute(sprintf('skus/%s', $sku), $params);
+        return $this->getSingleResultForRoute(sprintf('skus/%s', rawurlencode($sku)), $params);
     }
 
     /**
@@ -191,7 +191,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         }
 
         try {
-            $response = $this->patch(sprintf('skus/%s', $sku), [
+            $response = $this->patch(sprintf('skus/%s', rawurlencode($sku)), [
                 'json' => [
                     'method' => $method,
                     'stock' => $stock
