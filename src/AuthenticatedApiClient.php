@@ -29,7 +29,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         $shopId = $jwt->get('id_shop');
         $apiUrl = isset($config['base_uri']) ? $config['base_uri'] : self::API_URL;
         $baseUri = $apiUrl . 'v2/' . ($shopId ? sprintf('shops/%s/', $shopId) : '');
-//var_dump($baseUri);die;
+
         $defaultConfig = [
             'base_uri' => $baseUri,
             'headers' => [
@@ -118,7 +118,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     }
 
     /**
-     * @return JWT
+     * @return JWT Json Web Token
      */
     public function getJWT()
     {
@@ -311,7 +311,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     }
 
     /**
-     * @param $orderId Order id
+     * @param int $orderId Order id
      * @param array $params
      *
      * @return mixed PDF data to write
@@ -330,7 +330,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     /**
      * Changes order status to "preparing" (status_code: 25)
      *
-     * @param $orderId Order id
+     * @param int $orderId Order id
      *
      * @return array Order details with the new status
      */
@@ -348,7 +348,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     /**
      * Changes order status to "preparing" (status_code: 25)
      *
-     * @param $orderId Order id
+     * @param int $orderId Order id
      * @param array $trackingNumbers Tracking numbers
      *                               Example: [
      *                                   'tracking_numbers' => [
