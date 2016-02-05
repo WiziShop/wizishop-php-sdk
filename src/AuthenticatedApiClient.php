@@ -11,7 +11,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     /**
      * @const string SDK version
      */
-    const VERSION = '1.0.2';
+    const VERSION = '1.0.3';
 
     /**
      * @const string API URL (ending with /)
@@ -328,6 +328,78 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     }
 
     /**
+     * Changes order status to "pending payment" (status_code: 5)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function pendingPaymentOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/pending_payment', $orderId));
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * Changes order status to "pending payment verification" (status_code: 10)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function pendingPaymentVerificationOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/pending_payment_verification', $orderId));
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * Changes order status to "pending replenishment" (status_code: 11)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function pendingReplenishmentOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/pending_replenishment', $orderId));
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * Changes order status to "pending preparation" (status_code: 20)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function pendingPreparationOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/pending_preparation', $orderId));
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
      * Changes order status to "preparing" (status_code: 25)
      *
      * @param int $orderId Order id
@@ -346,7 +418,25 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     }
 
     /**
-     * Changes order status to "preparing" (status_code: 25)
+     * Changes order status to "partially sent" (status_code: 29)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function partiallySentOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/partially_sent', $orderId));
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * Changes order status to "sent" (status_code: 30)
      *
      * @param int $orderId Order id
      * @param array $trackingNumbers Tracking numbers
@@ -367,6 +457,78 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
             $response = $this->post(sprintf('orders/%s/ship', $orderId), [
                 'json' => $trackingNumbers
             ]);
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * Changes order status to "delivered" (status_code: 35)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function deliveredOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/delivered', $orderId));
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * Changes order status to "being returned" (status_code: 40)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function returnOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/return', $orderId));
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * Changes order status to "returned" (status_code: 45)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function returnedOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/returned', $orderId));
+
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * Changes order status to "refunded" (status_code: 46)
+     *
+     * @param int $orderId Order id
+     *
+     * @return array Order details with the new status
+     */
+    public function refundedOrder($orderId)
+    {
+        try {
+            $response = $this->post(sprintf('orders/%s/refunded', $orderId));
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
