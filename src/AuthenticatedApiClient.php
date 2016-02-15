@@ -11,7 +11,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     /**
      * @const string SDK version
      */
-    const VERSION = '1.0.3';
+    const VERSION = '1.0.4';
 
     /**
      * @const string API URL (ending with /)
@@ -144,6 +144,27 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     public function getBrands(array $params = [])
     {
         return $this->getAllResultsForRoute('brands', $params);
+    }
+
+    /**
+     * @param int $customerId
+     * @param array $params
+     *
+     * @return array Customer
+     */
+    public function getCustomer($customerId, array $params = [])
+    {
+        return $this->getSingleResultForRoute(sprintf('customers/%s', $customerId), $params);
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return array Customers
+     */
+    public function getCustomers(array $params = [])
+    {
+        return $this->getAllResultsForRoute('customers', $params);
     }
 
     /**
