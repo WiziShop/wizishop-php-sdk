@@ -328,6 +328,40 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     }
 
     /**
+     * @param int $orderId Order id
+     * @param array $params
+     *
+     * @return mixed PDF data to write
+     */
+    public function getPickingSlipForOrder($orderId, array $params = [])
+    {
+        try {
+            $response = $this->get(sprintf('orders/%s/picking_slip', $orderId), $params);
+
+            return (string) $response->getBody();
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
+     * @param int $orderId Order id
+     * @param array $params
+     *
+     * @return mixed PDF data to write
+     */
+    public function getDeliverySlipForOrder($orderId, array $params = [])
+    {
+        try {
+            $response = $this->get(sprintf('orders/%s/delivery_slip', $orderId), $params);
+
+            return (string) $response->getBody();
+        } catch (RequestException $e) {
+            throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
+        }
+    }
+
+    /**
      * Changes order status to "pending payment" (status_code: 5)
      *
      * @param int $orderId Order id
