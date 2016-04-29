@@ -75,6 +75,12 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
      */
     private function getAllResultsForRoute($route, array $params = [])
     {
+        if (array_key_exists('page', $params) || array_key_exists('limit', $params)) {
+            return $this->getSingleResultForRoute($route, [
+                'query' => $params
+            ]);
+        }
+
         try {
             return $this->assembleResults(
                 function ($page) use ($route, $params) {
