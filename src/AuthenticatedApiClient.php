@@ -174,6 +174,16 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
     }
 
     /**
+     * @param array $params
+     *
+     * @return array NewsletterSubscribers
+     */
+    public function getNewsletterSubscribers(array $params = [])
+    {
+        return $this->getAllResultsForRoute('newsletter/subscribers', $params);
+    }
+
+    /**
      * @param string $sku
      * @param array $params
      *
