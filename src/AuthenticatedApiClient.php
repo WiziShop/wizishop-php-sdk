@@ -119,6 +119,10 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
+            if (404 == $e->getResponse()->getStatusCode()) { // If no result, the API returns 404
+                return [];
+            }
+
             throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
         }
     }
