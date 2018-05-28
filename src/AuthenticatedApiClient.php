@@ -28,7 +28,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         $this->jwt = $jwt;
         $shopId = $jwt->get('id_shop');
         $apiUrl = isset($config['base_uri']) ? $config['base_uri'] : self::API_URL;
-        $baseUri = $apiUrl . 'v2/' . ($shopId ? sprintf('shops/%s/', $shopId) : '');
+        $baseUri = $apiUrl . 'v3/' . ($shopId ? sprintf('shops/%s/', $shopId) : '');
 
         $defaultConfig = [
             'base_uri' => $baseUri,
@@ -119,6 +119,10 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
+            if (404 == $e->getResponse()->getStatusCode()) { // If no result, the API returns 404
+                return [];
+            }
+
             throw new ApiException($e->getMessage(), $e->getRequest(), $e->getResponse());
         }
     }
