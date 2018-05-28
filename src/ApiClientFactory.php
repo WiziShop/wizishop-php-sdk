@@ -23,7 +23,7 @@ class ApiClientFactory
         ]);
 
         try {
-            $authResponse = $client->post('/api/login_check', [
+            $authResponse = $client->post('/auth/login', [
                 'json' => [
                     'username' => $username,
                     'password' => $password

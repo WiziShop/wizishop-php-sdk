@@ -28,7 +28,7 @@ class AuthenticatedApiClient extends \GuzzleHttp\Client
         $this->jwt = $jwt;
         $shopId = $jwt->get('id_shop');
         $apiUrl = isset($config['base_uri']) ? $config['base_uri'] : self::API_URL;
-        $baseUri = $apiUrl . 'v2/' . ($shopId ? sprintf('shops/%s/', $shopId) : '');
+        $baseUri = $apiUrl . 'v3/' . ($shopId ? sprintf('shops/%s/', $shopId) : '');
 
         $defaultConfig = [
             'base_uri' => $baseUri,
