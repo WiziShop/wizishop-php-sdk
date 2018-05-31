@@ -18,11 +18,11 @@ class ApiClientFactory
      */
     public static function authenticate($username, $password, array $config = [])
     {
-        try {
-			$client = new Client([
-				'base_uri' => AuthenticatedApiClient::API_URL,
-			]);
+        $client = new Client([
+            'base_uri' => AuthenticatedApiClient::API_URL,
+        ]);
 
+        try {
             $authResponse = $client->post('v3/auth/login', [
                 'json' => [
                     'username' => $username,
